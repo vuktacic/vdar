@@ -16,11 +16,12 @@
 - [ ] Design 3d print nut tolerance test
 
 ### PCB
-- [ ] CAD schematic
-- [ ] Place components
-- [ ] Route wires
-- [ ] Place mounting holes
-- [ ] Add personalization ✨ (again)
+- [x] CAD schematic
+- [x] Verify footprints
+- [x] Place components
+- [x] Route wires
+- [x] Place mounting holes
+- [x] Add personalization ✨ (again)
 
 ### Firmware
 - [ ] Do the damn math

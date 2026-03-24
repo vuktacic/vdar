@@ -1,0 +1,47 @@
+|" Ordered "|" On-hand "|" Item "|" Vendor "|" Qty "|
+|" :--- "|" :--- "|" :--- "|" :--- "|" :--- "|
+| **Mechanical** | | | | |
+| [ ] | [ ] | [NEMA 17 Motor 17HS4023](https://www.aliexpress.com/item/1005003874936862.html) | AliExpress | 2 |
+| [ ] | [ ] | [6804-2RS (20x32x7) Bearing](https://www.aliexpress.com/item/1005006415114490.html) | AliExpress | 1 |
+| [ ] | [ ] | [F604-ZZ (4x122x4) Bearing](https://www.aliexpress.com/item/1005006868220737.html) | AliExpress | 2 |
+| [ ] | [ ] | [330T 6mm Wide 2mm Pitch GT2 Timing Belt](https://www.aliexpress.com/item/1005006817234108.html) | AliExpress | 1 |
+| [ ] | [ ] | [85T 6mm Wide 2mm Pitch GT2 Timing Belt](https://www.aliexpress.com/item/1005007811742786.html) | AliExpress | 1 |
+| **3D Printed** | | | | |
+| [ ] | [ ] | Main Plate | Home | 1 |
+| [ ] | [ ] | Bottom Plate | Home | 1 |
+| [ ] | [ ] | Tower | Home | 2 |
+| [ ] | [ ] | Yoke | Home | 1 |
+| [ ] | [ ] | Turret Endstop Connector | Home | 1 |
+| [ ] | [ ] | Sweeper Endstop Connector | Home | 1 |
+| [ ] | [ ] | Turret Jut | Home | 1 |
+| [ ] | [ ] | Leg | Home | 4 |
+| [ ] | [ ] | Yoke Right Spacer (11.8mm Long) | Home | 1 |
+| [ ] | [ ] | Yoke Left Spacer (0.6mm Long) | Home | 1 |
+| [ ] | [ ] | PCB Spacer (7.4mm Long) | Home | 3 |
+| [ ] | [ ] | 144T Turret Pulley | Home | 1 |
+| [ ] | [ ] | 20T Turret Pinion | Home | 1 |
+| [ ] | [ ] | 45T Sweeper Pulley | Home | 1 |
+| [ ] | [ ] | 25T Sweeper Pinion | Home | 1 |
+| **Fasteners** | | | | |
+| [ ] | [ ] | M3D4x20 Hex Socket Cap Shoulder Bolt | Fastenal | 2 |
+| [ ] | [ ] | M2x5 Hex Socket Cap Screw | Fastenal | 2 |
+| [ ] | [ ] | M2 Hex Nut | Fastenal | 2 |
+| [ ] | [ ] | M3x6 Hex Socket Cap Screw | Aliexpress | 5 |
+| [ ] | [ ] | M3x8 Hex Socket Cap Screw | Aliexpress | 10 |
+| [ ] | [ ] | M3x10 Hex Socket Cap Screw | Aliexpress | 23 |
+| [ ] | [ ] | M3x16 Hex Socket Cap Screw | Aliexpress | 3 |
+| [ ] | [ ] | M3 Hex Nut | Aliexpress | 35 |
+| **Electronics** | | | | |
+| [x] | [ ] | [Benewake TF-Luna 250Hz LIDAR Sensor](https://www.aliexpress.com/item/1005009516099639.html) | AliExpress | 1 |
+| [ ] | [ ] | [Optical Endstop](https://www.aliexpress.com/item/1005005231591120.html)  | AliExpress | 2 |
+| [ ] | [ ] | [TMC2209 Stepper Driver](https://www.aliexpress.com/item/1005006323811276.html) | AliExpress | 2 |
+| [ ] | [ ] | [MP1584EN Devboard Buck Converter](https://www.aliexpress.com/item/1005007136976280.html) | AliExpress | 1 |
+| [x] | [ ] | [12 Wire 2A Slip Ring](https://www.aliexpress.com/item/1005007805413865.html) | AliExpress | 1 |
+| [x] | [ ] | [USB C Decoy Board](https://www.aliexpress.com/item/1005005622939899.html) | AliExpress | 1 |
+
+| [ ] | [ ] | PCB | JLCPCB | 1 |
+| [ ] | [ ] | [Motor Capacitor](https://www.lcsc.com/product-detail/C2836436.html) | LCSC | 5 |
+| [x] | [x] | ESP32 DevKit-C | Home | 1 |
+| [x] | [x] | JST-XH/Dupont Kits | School | 1 |
+| [x] | [x] | Socket Headers | School | 1 |
+| --- | --- | --- | --- | --- |
