@@ -31,6 +31,7 @@
 | [ ] | [ ] | M3x10 Hex Socket Cap Screw | Aliexpress | 23 |
 | [ ] | [ ] | M3x16 Hex Socket Cap Screw | Aliexpress | 3 |
 | [ ] | [ ] | M3 Hex Nut | Aliexpress | 35 |
+| [ ] | [ ] | [M3 Kit](https://www.aliexpress.com/item/1005010634719167.html) | Aliexpress | 1 |
 | **Electronics** | | | | |
 | [x] | [ ] | [Benewake TF-Luna 250Hz LIDAR Sensor](https://www.aliexpress.com/item/1005009516099639.html) | AliExpress | 1 |
 | [ ] | [ ] | [Optical Endstop](https://www.aliexpress.com/item/1005005231591120.html)  | AliExpress | 2 |
@@ -38,10 +39,27 @@
 | [ ] | [ ] | [MP1584EN Devboard Buck Converter](https://www.aliexpress.com/item/1005007136976280.html) | AliExpress | 1 |
 | [x] | [ ] | [12 Wire 2A Slip Ring](https://www.aliexpress.com/item/1005007805413865.html) | AliExpress | 1 |
 | [x] | [ ] | [USB C Decoy Board](https://www.aliexpress.com/item/1005005622939899.html) | AliExpress | 1 |
-
-| [ ] | [ ] | PCB | JLCPCB | 1 |
-| [ ] | [ ] | [Motor Capacitor](https://www.lcsc.com/product-detail/C2836436.html) | LCSC | 5 |
 | [x] | [x] | ESP32 DevKit-C | Home | 1 |
-| [x] | [x] | JST-XH/Dupont Kits | School | 1 |
-| [x] | [x] | Socket Headers | School | 1 |
+| [ ] | [ ] | PCB | JLCPCB | 1 |
+| [ ] | [ ] | [35V 470μF 1206 Capacitor](https://www.lcsc.com/product-detail/C2836436.html) | LCSC | 2 |
+| [ ] | [ ] | [16V 10μF 1206 Capacitor](https://www.lcsc.com/product-detail/C1849.html) | LCSC | 1 |
+| [ ] | [ ] | [100V 100nF 1206 Capacitor](https://www.lcsc.com/product-detail/C1945.html) | LCSC | 4 |
+| [ ] | [ ] | [1kΩ 1206 Resistor](https://www.lcsc.com/product-detail/C2907440.html) | LCSC | 1 |
+| [ ] | [ ] | [15Vrwm 16.7Vbr 24.4VC TVS Diode](https://www.lcsc.com/product-detail/C83846.html) | LCSC | 1 |
+| [ ] | [ ] | 1x3 Pin JST-PH Male Header | School | 4 |
+| [ ] | [ ] | 1x4 Pin JST-PH Male Header | School | 4 |
+| [ ] | [ ] | 1x8 Pin JST-PH Male Header | School | 3 |
+| [ ] | [ ] | 1x3 Pin JST-PH Female Header | School | 4 |
+| [ ] | [ ] | 1x4 Pin JST-PH Female Header | School | 4 |
+| [ ] | [ ] | 1x8 Pin JST-PH Female Header | School | 3 |
+| [ ] | [ ] | 1x2 Pin 2.54mm Header | School | 4 |
+| [ ] | [ ] | 1x8 Pin 2.54mm Header | School | 4 |
+| [ ] | [ ] | 1x19 Pin 2.54mm Header | School | 2 |
+| [ ] | [ ] | 1x3 Pin JST-PH Female to 1x3 Pin JST-XH Female Cable | School | 2 |
+| [ ] | [ ] | 1x3 Pin JST-PH Female to 1x3 Pin JST-PH Female Cable | School | 1 |
+| [ ] | [ ] | 1x4 Pin JST-PH Female to 1x4 Pin JST-XH Female Cable | School | 2 |
+| [ ] | [ ] | 1x4 Pin JST-PH Female to 1x4 Pin JST-PH Female Cable | School | 1 |
+| [ ] | [ ] | 1x8 Pin JST-PH Female to 1x6 Pin JST-XH Female Cable | School | 1 |
+| [ ] | [ ] | 1x8 Pin JST-PH Female to 1x8 Pin JST-PH Female Cable | School | 1 |
+| [ ] | [ ] | 2m of 24-32 AWG Wire | School | 1 |
 | --- | --- | --- | --- | --- |
