@@ -9131,6 +9131,52 @@
 			)
 		)
 	)
+	(sheet
+		(at 297.18 52.07)
+		(size 129.54 105.41)
+		(exclude_from_sim yes)
+		(in_bom no)
+		(on_board no)
+		(dnp yes)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "9c1f1a3e-72db-40bc-88b9-7fd6f28f96b7")
+		(property "Sheetname" "offboard"
+			(at 297.18 51.3584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "offboard.kicad_sch"
+			(at 297.18 158.0646 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "vdar"
+				(path "/8db2f348-90b2-424a-8046-601e82624cf2"
+					(page "2")
+				)
+			)
+		)
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")

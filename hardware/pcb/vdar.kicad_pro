@@ -812,13 +812,17 @@
         "uuid": "8db2f348-90b2-424a-8046-601e82624cf2"
       }
     ],
-    "used_designators": "",
+    "used_designators": "J5-20",
     "variants": []
   },
   "sheets": [
     [
       "8db2f348-90b2-424a-8046-601e82624cf2",
       "vdar"
+    ],
+    [
+      "9c1f1a3e-72db-40bc-88b9-7fd6f28f96b7",
+      "offboard"
     ]
   ],
   "text_variables": {},
