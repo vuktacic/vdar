@@ -1,0 +1,29 @@
+|" Ordered "|" On-hand "|" Item "|" Vendor "|" Qty "|" Total Cost (CAD) "|
+|" :--- "|" :--- "|" :--- "|" :--- "|" :--- "| |
+| **Mechanical** | | | | | |
+| [ ] | [ ] | [NEMA 17 Motor 17HS4023](https://www.aliexpress.com/item/1005003874936862.html) | AliExpress | 3 | $30.66 |
+| [ ] | [ ] | [6804-2RS (20x32x7) Bearing](https://www.aliexpress.com/item/1005006415114490.html) | AliExpress | 2 | $6.82 |
+| [ ] | [ ] | [F604-ZZ (4x22x4) Bearing](https://www.aliexpress.com/item/1005006868220737.html) | AliExpress | 5 | $7.91 |
+| [ ] | [ ] | [330T 6mm Wide 2mm Pitch GT2 Timing Belt](https://www.aliexpress.com/item/1005006817234108.html) | AliExpress | 1 | $7.42 |
+| [ ] | [ ] | [85T 6mm Wide 2mm Pitch GT2 Timing Belt](https://www.aliexpress.com/item/1005007811742786.html) | AliExpress | 1 | $2.84 |
+| **Fasteners** | | | | | |
+| [ ] | [ ] | [M3D4x18 Hex Socket Cap Shoulder Bolt](https://www.aliexpress.com/item/1005008314676042.html) | Aliexpress | 10 | $4.59 |
+| **Electronics** | | | | | |
+| [x] | [ ] | [Benewake TF-Luna 250Hz LIDAR Sensor](https://www.aliexpress.com/item/1005009516099639.html) | AliExpress | 1 | $31.18 |
+| [ ] | [ ] | [Optical Endstop](https://www.aliexpress.com/item/1005005231591120.html)  | AliExpress | 6 | $6.89 |
+| [ ] | [ ] | [TMC2209 Stepper Driver](https://www.aliexpress.com/item/1005006323811276.html) | AliExpress | 3 | $12.78 |
+| [ ] | [ ] | [MP1584EN Devboard Buck Converter](https://www.aliexpress.com/item/1005007136976280.html) | AliExpress | 1 | $1.72 |
+| [x] | [ ] | [12 Wire 2A Slip Ring](https://www.aliexpress.com/item/1005007805413865.html) | AliExpress | 1 | $16.32 |
+| [x] | [ ] | [USB C Decoy Board](https://www.aliexpress.com/item/1005005622939899.html) | AliExpress | 1 | $1.98 |
+| [ ] | [ ] | PCB | JLCPCB | 5 | $2.00 |
+| [ ] | [ ] | PCB Shipping | JLCPCB | 1 | $1.50 |
+| [ ] | [ ] | [35V 470μF 1206 Capacitor](https://www.lcsc.com/product-detail/C2836436.html) | LCSC | 2 | $0.72 |
+| [ ] | [ ] | [16V 10μF 1206 Capacitor](https://www.lcsc.com/product-detail/C1849.html) | LCSC | 1 | $0.41 |
+| [ ] | [ ] | [100V 100nF 1206 Capacitor](https://www.lcsc.com/product-detail/C1945.html) | LCSC | 4 | $0.25 |
+| [ ] | [ ] | [1kΩ 1206 Resistor](https://www.lcsc.com/product-detail/C2907440.html) | LCSC | 1 | $0.40 |
+| [ ] | [ ] | [15Vrwm 16.7Vbr 24.4VC TVS Diode](https://www.lcsc.com/product-detail/C83846.html) | LCSC | 1 | $0.67 |
+| [ ] | [ ] | LCSC Handling | LCSC | 1 | $3.00 |
+| [ ] | [ ] | LCSC Shipping (Unknown) | LCSC | 1 | $3.00 |
+| --- | --- | --- | --- | --- |
+| **TOTAL OUTLAY** | | | | | **$143.06** |
+| **TOTAL OUTLAY (USD)** | | | | | **$103.98** |
