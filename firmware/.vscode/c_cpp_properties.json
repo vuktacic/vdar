@@ -10,6 +10,8 @@
             "includePath": [
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/include",
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/src",
+                "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TFMiniPlus",
+                "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TMC2209/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos",
@@ -246,6 +248,8 @@
                 "path": [
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/include",
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/src",
+                    "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TFMiniPlus",
+                    "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TMC2209/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/freertos/include/esp_additions/freertos",
