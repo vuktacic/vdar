@@ -25,8 +25,10 @@
 
 ### Firmware
 - [ ] Do the damn math
-- [ ] Write the output (motor control) code.
-- [ ] Write the input (measurement) code.
+- [x] Find libraries
+- [x] Homing sequence
+- [ ] Sensor API
+- [ ] Data collection
 - [ ] Write the bridge (communication) code.
 
 ### Software
