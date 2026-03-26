@@ -10,6 +10,9 @@
             "includePath": [
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/include",
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/src",
+                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
+                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
+                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TFMiniPlus",
                 "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TMC2209/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
@@ -219,7 +222,6 @@
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Ethernet/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/FFat/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
-                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdate/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdateServer/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/I2S/src",
@@ -237,8 +239,6 @@
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
-                "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                 ""
@@ -248,6 +248,9 @@
                 "path": [
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/include",
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/src",
+                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
+                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
+                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TFMiniPlus",
                     "/mnt/c/Users/vukta/Projects/vdar/firmware/.pio/libdeps/upesy_wroom/TMC2209/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/tools/sdk/esp32/include/newlib/platform_include",
@@ -457,7 +460,6 @@
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Ethernet/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/FFat/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
-                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPClient/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdate/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/HTTPUpdateServer/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/I2S/src",
@@ -475,8 +477,6 @@
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/USB/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
-                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
-                    "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     "/home/vuk/.platformio/packages/framework-arduinoespressif32/libraries/Wire/src",
                     ""

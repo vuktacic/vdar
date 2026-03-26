@@ -1,6 +1,7 @@
 #include <TMC2209.h>
 #include <TFMiniPlus.h>
 #include "config.h"
+#include "relay.h"
 
 namespace telemetry {
     HardwareSerial serial_lidar(2);
@@ -9,6 +10,7 @@ namespace telemetry {
 
     void setup_serial() {
         serial_lidar.begin(LUNA_BAUD, SERIAL_8N1, LUNA_RX, LUNA_TX);
+        relay::debug("Lidar serial configured");
     }
 
     void setup_lidar() {
@@ -20,6 +22,7 @@ namespace telemetry {
 
         lidar.setFrameRate(LUNA_HZ);
         lidar.setMeasurementTo(TFMINI_MEASUREMENT_CM);
+        relay::debug("Lidar configured");
     }
 
     bool turret_endstop_triggered() {

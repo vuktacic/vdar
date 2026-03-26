@@ -19,7 +19,6 @@
 
 #define TMC_BAUD 38400
 
-#define PC_BAUD 115200
 #define HEARTBEAT_MS 1000
 #if __has_include("secrets.h")
     #include "secrets.h"
@@ -38,10 +37,15 @@
 #define SWEEPER_PINION_TEETH 25
 #define SWEEPER_PULLEY_TEETH 45
 #define SWEEPER_GEAR_RATIO ((float)SWEEPER_PULLEY_TEETH / (float)SWEEPER_PINION_TEETH)
-#define SWEEPER_USTEPS 0
+#define SWEEPER_USTEPS 8
 
 // Settings
 #define AUTO_HOME true
 
 #define TURRET_REVERSE false
 #define SWEEPER_REVERSE false
+
+#define TURRET_HOMING_RPS 0.5f
+#define SWEEPER_HOMING_RPS 0.5f
+
+#define SWEEPER_HEARTBEAT_HZ 50.0f
