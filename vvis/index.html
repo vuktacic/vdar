@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>VVIS | Local Engine</title>
+    <style>
+        :root {
+            --theme-primary: #00ff88;
+            --theme-secondary: #5aa9ff;
+            --theme-bg: #050505;
+            --theme-bg-rgb: 5, 5, 5;
+            --theme-danger: #ff4d4d;
+            --theme-homing: #ffd166;
+        }
+        body { margin: 0; background: var(--theme-bg); overflow: hidden; }
+        #ui-overlay {
+            position: absolute; top: 20px; left: 20px;
+            color: var(--theme-primary); font-family: 'Courier New', monospace;
+            pointer-events: none; text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #serial-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 380px;
+            padding: 12px;
+            border: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.75);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 5;
+        }
+        #serial-row {
+            display: flex;
+            gap: 6px;
+        }
+        #serial-panel input,
+        #serial-panel select,
+        #serial-panel button {
+            background: #111;
+            color: var(--theme-primary);
+            border: 1px solid var(--theme-primary);
+            padding: 6px;
+            font-family: inherit;
+        }
+        #theme-config {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        #theme-config input[type="color"] {
+            width: 34px;
+            height: 24px;
+            padding: 0;
+            border: 1px solid var(--theme-primary);
+            background: transparent;
+            cursor: pointer;
+        }
+        #serial-input {
+            flex: 1;
+        }
+        #serial-log {
+            height: 180px;
+            overflow: auto;
+            border: 1px solid var(--theme-primary);
+            padding: 6px;
+            font-size: 12px;
+            white-space: pre-wrap;
+            background: rgba(var(--theme-bg-rgb), 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-overlay">
+        <div style="font-size: 1.5em; font-weight: bold;">VVIS</div>
+        <div id="engine-status">Engine: Loading</div>
+        <div id="esp-status">ESP32: Disconnected</div>
+        <div id="runtime-status">Status: Idle</div>
+    </div>
+
+    <div id="serial-panel">
+        <div style="font-weight: bold; letter-spacing: 1px;">Serial Terminal</div>
+        <div id="serial-row">
+            <select id="serial-port"></select>
+            <input id="serial-baud" type="number" value="115200" min="1200" step="1" />
+            <button id="serial-toggle-debug">Hide Debug</button>
+        </div>
+        <div id="serial-row">
+            <input id="serial-input" type="text" placeholder="Enter command" />
+            <button id="serial-send">Send</button>
+        </div>
+        <div id="theme-config">
+            <span>Theme</span>
+            <span>FG</span>
+            <input id="theme-primary" type="color" value="#e04815" />
+            <span>BG</span>
+            <input id="theme-secondary" type="color" value="#281f1f" />
+        </div>
+        <div id="serial-log"></div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./node_modules/three/build/three.module.js",
+                "three/addons/": "./node_modules/three/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="renderer.js"></script>
+</body>
+</html>
