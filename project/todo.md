@@ -24,29 +24,30 @@
 - [x] Add personalization ✨ (again)
 
 ### Firmware
-- [ ] Do the damn math
+- [x] Do the damn math
 - [x] Find libraries
 - [x] Homing sequence
-- [ ] Sensor API
-- [ ] Data collection
-- [ ] Write the bridge (communication) code.
+- [x] Sensor API
+- [x] Data collection
+- [x] Write the bridge (communication) code.
 
 ### Software
-- [ ] Do the damn math
-- [ ] Write the bridge code
-- [ ] Write the calculations
-- [ ] Write the visualizer code.
-- [ ] Write the control code
+- [x] Do the damn math
+- [x] Write the bridge code
+- [x] Write the calculations
+- [x] Write the visualizer code.
+- [x] Write the control code
 
 ### General
 - [x] Finalize BOM
-- [ ] Finalize Purchase Order
+- [x] Finalize Purchase Order
 
 ### Stasis Submission Requirements:
 - [x] Complete CAD assembly
   - [x] PCB included
 - [x] PCB model
-- [ ] Firmware
+- [x] Firmware
+- [x] Software
 
 ### Github Repo Contains:
 - [x] BOM in CSV format in root directory
@@ -57,9 +58,9 @@
 - [x] Source files for CAD
   - [x] .f3d
   - [x] .step
-- [ ] Firmware
-- [ ] Libraries
-- [ ] Software
+- [x] Firmware
+- [x] Libraries
+- [x] Software
 - [x] Organized in folders
 
 ### README.md Contains:

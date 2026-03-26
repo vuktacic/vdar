@@ -1,2 +1,2 @@
 # vvis
-Python visualizer for vdar.
+Nodejs visualizer for vdar.
