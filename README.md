@@ -7,4 +7,4 @@
 - [`./production`](./production) - Project management files for vdar
 - [`./production/assets`](./production/assets) - Media for production files
 - [`./vcore`](./vcore) - ESP32 firmware for vdar
-- [`./vvis`](./vvis) - Python visualizer for vdar
+- [`./vvis`](./vvis) - NodeJS visualizer for vdar
