@@ -27,7 +27,7 @@ I created vdar because of a generally interest in LiDAR. I've been playing with 
 ![alt text](./project/assets/image4.png)
 
 ### Offboard Wiring
-![alt text](./production/assets/image5.png)
+![alt text](./project/assets/image5.png)
 
 ## Bill of Materials
 | Ordered | On-hand | Item | Vendor | Qty | Total Cost (CAD) |
