@@ -4,10 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "firmware"
+			"path": "vcore"
 		},
 		{
-			"path": "software"
+			"path": "vvis"
 		}
 	],
 	"settings": {}

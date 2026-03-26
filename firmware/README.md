@@ -1,2 +1,0 @@
-# vdar firmware
-Platformio files.
