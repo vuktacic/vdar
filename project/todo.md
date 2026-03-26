@@ -64,10 +64,10 @@
 - [x] Organized in folders
 
 ### README.md Contains:
-- [ ] Short description
-- [ ] Why I made this project
-- [ ] **Pictures**
-- [ ] 3d CAD Screenshot
-- [ ] PCB Screenshot
-- [ ] Non-pcb Wiring Diagram
-- [ ] Bill of Materials in table format
+- [x] Short description
+- [x] Why I made this project
+- [x] **Pictures**
+- [x] 3d CAD Screenshot
+- [x] PCB Screenshot
+- [x] Non-pcb Wiring Diagram
+- [x] Bill of Materials in table format
