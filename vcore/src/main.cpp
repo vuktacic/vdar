@@ -5,6 +5,8 @@
 #include "telemetry.h"
 #include "kinematics.h"
 
+String runtime_status = "idle";
+
 void setup() {
 
     relay::setup_serial();
@@ -24,8 +26,15 @@ void setup() {
 
     telemetry::setup_lidar();
 
+    runtime_status = "idle";
+    relay::send_status(runtime_status);
+
     if(AUTO_HOME) {
+        runtime_status = "homing";
+        relay::send_status(runtime_status);
         motion::home();
+        runtime_status = "idle";
+        relay::send_status(runtime_status);
     }
 }
 
@@ -34,7 +43,14 @@ void loop() {
 
     if(instruction == "") { return;}
 
+    if(instruction == "status") {
+        relay::send_status(runtime_status);
+        return;
+    }
+
     if(instruction == "scan") {
+        runtime_status = "scanning";
+        relay::send_status(runtime_status);
         motion::heartbeat();
         motion::start_scan();
 
@@ -43,6 +59,8 @@ void loop() {
         while(true) {
             if(relay::read_instruction() == "stop") {
                 motion::stop();
+                runtime_status = "idle";
+                relay::send_status(runtime_status);
                 break;
             }
 
@@ -60,6 +78,8 @@ void loop() {
 
             if(motion::scan_finished()) {
                 relay::debug("Scan finished");
+                runtime_status = "idle";
+                relay::send_status(runtime_status);
                 break;
             }
         }
@@ -68,7 +88,11 @@ void loop() {
     }
 
     if(instruction == "home") {
+        runtime_status = "homing";
+        relay::send_status(runtime_status);
         motion::home();
+        runtime_status = "idle";
+        relay::send_status(runtime_status);
         return;
     }
 }

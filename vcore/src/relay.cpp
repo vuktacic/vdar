@@ -22,6 +22,7 @@ namespace relay {
                 String line = Serial.readStringUntil('\n');
                 line.trim();
                 if(line == "laptop_connect") {
+                    Serial.println("connection_ack");
                     relay::debug("Connected successfully");
                     break;
                 }
@@ -43,6 +44,10 @@ namespace relay {
             return line;
         }
         return "";
+    }
+
+    void send_status(String status) {
+        Serial.println("status_" + status);
     }
 
     void send(int distance, float azimuth, float elevation) {

@@ -139,7 +139,7 @@ namespace motion {
     }
 
     void start_scan() {
-        int32_t down_target_usteps = 90.0f * SWEEPER_USTEPS_TO_DEGREES;
+        int32_t down_target_usteps = SWEEP_ANGLE * SWEEPER_USTEPS_TO_DEGREES;
         uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / SWEEPER_HOMING_USTEPS_PER_SECOND;
     
         motion::run_sweeper_velocity(-SWEEPER_HOMING_VELOCITY);
@@ -150,7 +150,7 @@ namespace motion {
     }
 
     bool scan_finished() {
-        return motion::get_elevation() >= 90.0f;
+        return motion::get_elevation() >= SWEEP_ANGLE;
     }
 
     void stop() {

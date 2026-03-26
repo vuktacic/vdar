@@ -49,3 +49,5 @@
 #define SWEEPER_HOMING_RPS 0.5f
 
 #define SWEEPER_HEARTBEAT_HZ 50.0f
+
+#define SWEEP_ANGLE 80.0F
