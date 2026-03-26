@@ -19,3 +19,12 @@ contextBridge.exposeInMainWorld('serial', {
 	onStatus: (callback) => subscribe('serial:status', callback),
 	onError: (callback) => subscribe('serial:error', callback)
 })
+
+contextBridge.exposeInMainWorld('windowControls', {
+	minimize: () => ipcRenderer.invoke('window:minimize'),
+	toggleMaximize: () => ipcRenderer.invoke('window:toggleMaximize'),
+	close: () => ipcRenderer.invoke('window:close'),
+	getState: () => ipcRenderer.invoke('window:getState'),
+	prepareDragFromMaximizedSync: (payload) => ipcRenderer.sendSync('window:prepareDragFromMaximizedSync', payload),
+	onState: (callback) => subscribe('window:state', callback)
+})

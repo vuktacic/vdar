@@ -5,24 +5,90 @@
     <title>VVIS | Local Engine</title>
     <style>
         :root {
-            --theme-primary: #00ff88;
-            --theme-secondary: #5aa9ff;
-            --theme-bg: #050505;
+            --theme-primary: #e04815;
+            --theme-secondary: #e04815;
+            --theme-bg: #281f1f;
             --theme-bg-rgb: 5, 5, 5;
             --theme-danger: #ff4d4d;
             --theme-homing: #ffd166;
         }
-        body { margin: 0; background: var(--theme-bg); overflow: hidden; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background: var(--theme-bg);
+            overflow: hidden;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            z-index: 0;
+        }
+        #titlebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.9);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            z-index: 1000;
+            -webkit-app-region: drag;
+            pointer-events: auto;
+            user-select: none;
+        }
+        #titlebar-label {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding-left: 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            -webkit-app-region: inherit;
+        }
+        #titlebar-buttons {
+            display: flex;
+            height: 100%;
+            -webkit-app-region: no-drag;
+        }
+        #titlebar-buttons button {
+            width: 46px;
+            border: 0;
+            border-left: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.95);
+            color: var(--theme-primary);
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            -webkit-app-region: no-drag;
+        }
+        #titlebar-buttons button:hover {
+            background: rgba(var(--theme-bg-rgb), 0.6);
+        }
+        #window-close:hover {
+            background: #7b1b1b;
+            color: #ffffff;
+        }
         #ui-overlay {
-            position: absolute; top: 20px; left: 20px;
+            position: absolute; top: 56px; left: 20px;
             color: var(--theme-primary); font-family: 'Courier New', monospace;
             pointer-events: none; text-transform: uppercase;
             letter-spacing: 2px;
+            z-index: 6;
         }
         #serial-panel {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            position: static;
             width: 380px;
             padding: 12px;
             border: 1px solid var(--theme-primary);
@@ -34,6 +100,16 @@
             flex-direction: column;
             gap: 8px;
             z-index: 5;
+        }
+        #right-column {
+            position: absolute;
+            top: 56px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 5;
+            pointer-events: none;
         }
         #serial-row {
             display: flex;
@@ -54,6 +130,26 @@
             gap: 8px;
             font-size: 12px;
         }
+        #idle-panel {
+            position: static;
+            width: 380px;
+            padding: 12px;
+            border: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.75);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 5;
+        }
+        .idle-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
         #theme-config input[type="color"] {
             width: 34px;
             height: 24px;
@@ -61,6 +157,24 @@
             border: 1px solid var(--theme-primary);
             background: transparent;
             cursor: pointer;
+        }
+        #idle-panel input[type="range"] {
+            width: 140px;
+            accent-color: var(--theme-primary);
+            cursor: pointer;
+            flex: 1;
+        }
+        #idle-panel select {
+            background: #111;
+            color: var(--theme-primary);
+            border: 1px solid var(--theme-primary);
+            padding: 6px;
+            font-family: inherit;
+            flex: 1;
+        }
+        .idle-value {
+            width: 64px;
+            text-align: right;
         }
         #serial-input {
             flex: 1;
@@ -74,9 +188,57 @@
             white-space: pre-wrap;
             background: rgba(var(--theme-bg-rgb), 0.6);
         }
+        #scan-stats {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 12px;
+            border: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.75);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 5;
+            min-width: 220px;
+            line-height: 1.6;
+        }
+        #scan-stats .value {
+            float: right;
+            margin-left: 16px;
+        }
+        #reset-scan {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            padding: 8px 14px;
+            border: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.85);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            z-index: 6;
+            pointer-events: auto;
+        }
+        #reset-scan:hover {
+            background: rgba(var(--theme-bg-rgb), 0.6);
+        }
     </style>
 </head>
 <body>
+    <div id="titlebar">
+        <div id="titlebar-label">VVIS | Local Engine</div>
+        <div id="titlebar-buttons">
+            <button id="window-minimize" title="Minimize">-</button>
+            <button id="window-maximize" title="Maximize">+</button>
+            <button id="window-close" title="Close">x</button>
+        </div>
+    </div>
+
     <div id="ui-overlay">
         <div style="font-size: 1.5em; font-weight: bold;">VVIS</div>
         <div id="engine-status">Engine: Loading</div>
@@ -84,25 +246,57 @@
         <div id="runtime-status">Status: Idle</div>
     </div>
 
-    <div id="serial-panel">
-        <div style="font-weight: bold; letter-spacing: 1px;">Serial Terminal</div>
-        <div id="serial-row">
-            <select id="serial-port"></select>
-            <input id="serial-baud" type="number" value="115200" min="1200" step="1" />
-            <button id="serial-toggle-debug">Hide Debug</button>
+    <div id="scan-stats">
+        <div>Time Spent Scanning <span id="scan-time" class="value">00:00.0</span></div>
+        <div># of Points <span id="point-count" class="value">0</span></div>
+        <div>Framerate <span id="frame-rate" class="value">0.0 FPS</span></div>
+    </div>
+
+    <button id="reset-scan" type="button">Reset Scan</button>
+
+    <div id="right-column">
+        <div id="serial-panel">
+            <div style="font-weight: bold; letter-spacing: 1px;">Serial Terminal</div>
+            <div id="serial-row">
+                <select id="serial-port"></select>
+                <input id="serial-baud" type="number" value="115200" min="1200" step="1" />
+                <button id="serial-toggle-debug">Hide Debug</button>
+            </div>
+            <div id="serial-row">
+                <input id="serial-input" type="text" placeholder="Enter command" />
+                <button id="serial-send">Send</button>
+            </div>
+            <div id="theme-config">
+                <span>Theme</span>
+                <span>FG</span>
+                <input id="theme-primary" type="color" value="#e04815" />
+                <span>BG</span>
+                <input id="theme-secondary" type="color" value="#281f1f" />
+            </div>
+            <div id="serial-log"></div>
         </div>
-        <div id="serial-row">
-            <input id="serial-input" type="text" placeholder="Enter command" />
-            <button id="serial-send">Send</button>
+
+        <div id="idle-panel">
+            <div style="font-weight: bold; letter-spacing: 1px;">Idle Pattern</div>
+            <div class="idle-row">
+                <span>Pattern</span>
+                <select id="idle-pattern-select">
+                    <option value="ribbon-bloom" selected>Ribbon Bloom</option>
+                    <option value="helix-shell">Helix Shell</option>
+                    <option value="rose-lattice">Rose Lattice</option>
+                </select>
+            </div>
+            <div class="idle-row">
+                <span>Speed</span>
+                <input id="idle-density" type="range" min="500" max="25000" step="250" value="4500" />
+                <span id="idle-density-value" class="idle-value">4500</span>
+            </div>
+            <div class="idle-row">
+                <span>Density</span>
+                <input id="idle-pattern-speed" type="range" min="0.05" max="2.0" step="0.05" value="0.1" />
+                <span id="idle-pattern-speed-value" class="idle-value">0.1x</span>
+            </div>
         </div>
-        <div id="theme-config">
-            <span>Theme</span>
-            <span>FG</span>
-            <input id="theme-primary" type="color" value="#e04815" />
-            <span>BG</span>
-            <input id="theme-secondary" type="color" value="#281f1f" />
-        </div>
-        <div id="serial-log"></div>
     </div>
 
     <script type="importmap">
