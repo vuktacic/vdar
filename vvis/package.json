@@ -18,5 +18,12 @@
     "electron-squirrel-startup": "^1.0.1",
     "serialport": "^13.0.0",
     "three": "^0.183.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "printWidth": 100
   }
 }
