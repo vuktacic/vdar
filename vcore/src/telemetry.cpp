@@ -34,7 +34,7 @@ namespace telemetry {
     }
 
     uint16_t get_distance() {
-        if (lidar.readData()) {
+        if(lidar.readData()) {
             return lidar.getDistance();
         }
         else {

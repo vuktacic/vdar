@@ -41,7 +41,7 @@ void setup() {
 void loop() {
     String instruction = relay::read_instruction();
 
-    if(instruction == "") { return;}
+    if(instruction == "") { return; }
 
     if(instruction == "status") {
         relay::send_status(runtime_status);
@@ -55,7 +55,7 @@ void loop() {
         motion::start_scan();
 
         uint32_t current_us = micros();
-        
+
         while(true) {
             if(relay::read_instruction() == "stop") {
                 motion::stop();

@@ -77,12 +77,12 @@ namespace motion {
         turret_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
 
         motion::run_turret_velocity(TURRET_HOMING_VELOCITY);
-        while(telemetry::turret_endstop_triggered()) { }
+        while(telemetry::turret_endstop_triggered()) {}
         motion::run_turret_velocity(0);
         relay::debug("Turret out of endstop");
 
         motion::run_turret_velocity(TURRET_HOMING_VELOCITY);
-        while(!telemetry::turret_endstop_triggered()) { }
+        while(!telemetry::turret_endstop_triggered()) {}
         motion::run_turret_velocity(0);
         relay::debug("Turret at endstop");
 
@@ -108,7 +108,7 @@ namespace motion {
 
         uint32_t up_start_ms = millis();
         motion::run_sweeper_velocity(SWEEPER_HOMING_VELOCITY);
-        while(!telemetry::sweeper_endstop_triggered() && (millis() - up_start_ms < up_duration_limit_ms)){ }
+        while(!telemetry::sweeper_endstop_triggered() && (millis() - up_start_ms < up_duration_limit_ms)) {}
         motion::run_sweeper_velocity(0);
         relay::debug("Sweeper moved up");
 
@@ -119,7 +119,7 @@ namespace motion {
 
     void heartbeat() {
         uint32_t dt_us = micros() - last_heartbeat_us;
-        
+
         current_turret_usteps += (current_turret_velocity_usteps_per_second * dt_us) / 1000000.0f;
         current_sweeper_usteps += (current_sweeper_velocity_usteps_per_second * dt_us) / 1000000.0f;
 
@@ -141,7 +141,7 @@ namespace motion {
     void start_scan() {
         int32_t down_target_usteps = SWEEP_ANGLE * SWEEPER_USTEPS_TO_DEGREES;
         uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / SWEEPER_HOMING_USTEPS_PER_SECOND;
-    
+
         motion::run_sweeper_velocity(-SWEEPER_HOMING_VELOCITY);
         delay(down_duration_ms);
         motion::run_sweeper_velocity(0);
