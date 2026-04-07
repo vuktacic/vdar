@@ -8,10 +8,10 @@
 ### Print Settings
 - Printer: SV06
 - Layer height: 0.2mm
-- Infill: 20% Gyroid
+- Infill: 15% Gyroid
 - Nozzle temp: 205°C
 - Bed temp: 60°C
-- Print speed: 50 mm/s
+- Print speed: 90 mm/s
 - Tree supports
 
 ## Assembly Steps
