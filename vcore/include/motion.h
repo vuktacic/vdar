@@ -4,6 +4,7 @@
 namespace motion {
     extern float get_azimuth();
     extern float get_elevation();
+    extern void set_elevation(float elevation);
     extern void setup_serial();
     extern void setup_controllers();
     extern void enable_controllers();

@@ -13,20 +13,23 @@ namespace motion {
     uint32_t last_heartbeat_us = 0;
 
     float get_azimuth() {
-        return fmod((current_turret_usteps / (float)TURRET_USTEPS_TO_DEGREES) + 360.0f, 360.0f);
+        return fmod((current_turret_usteps / kinematics::turret_usteps_to_degrees()) + 360.0f, 360.0f);
     }
 
     float get_elevation() {
-        return current_sweeper_usteps / (float)SWEEPER_USTEPS_TO_DEGREES;
+        return current_sweeper_usteps / kinematics::sweeper_usteps_to_degrees();
     }
 
-    HardwareSerial serial_motor(1);
+    void set_elevation(float elevation) {
+        current_sweeper_usteps = elevation * kinematics::sweeper_usteps_to_degrees();
+    }
+
+    HardwareSerial & serial_motor = Serial2;
 
     TMC2209 turret_motor;
     TMC2209 sweeper_motor;
 
     void setup_serial() {
-        serial_motor.begin(TMC_BAUD, SERIAL_8N1, TMC_RX, TMC_TX);
         relay::debug("Motor serial configured");
     }
 
@@ -46,6 +49,16 @@ namespace motion {
         turret_motor.setStandstillMode(TMC2209::FREEWHEELING);
         sweeper_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
         relay::debug("Motor brake mode configured");
+
+        turret_motor.setRunCurrent(40);
+        sweeper_motor.setRunCurrent(70);
+
+        turret_motor.disableStealthChop();
+        sweeper_motor.disableStealthChop();
+
+        relay::debug(String(turret_motor.isCommunicating()));
+        relay::debug(String(turret_motor.isCommunicatingButNotSetup()));
+        relay::debug(String(turret_motor.isSetupAndCommunicating()));
 
     }
 
@@ -76,12 +89,12 @@ namespace motion {
     void home_turret() {
         turret_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
 
-        motion::run_turret_velocity(TURRET_HOMING_VELOCITY);
+        motion::run_turret_velocity((int)kinematics::turret_homing_usteps_per_period());
         while(telemetry::turret_endstop_triggered()) {}
         motion::run_turret_velocity(0);
         relay::debug("Turret out of endstop");
 
-        motion::run_turret_velocity(TURRET_HOMING_VELOCITY);
+        motion::run_turret_velocity((int)kinematics::turret_homing_usteps_per_period());
         while(!telemetry::turret_endstop_triggered()) {}
         motion::run_turret_velocity(0);
         relay::debug("Turret at endstop");
@@ -95,19 +108,19 @@ namespace motion {
     void home_sweeper() {
         sweeper_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
 
-        int32_t down_target_usteps = 90.0f * SWEEPER_USTEPS_TO_DEGREES;
-        int32_t up_target_usteps = 180.0f * SWEEPER_USTEPS_TO_DEGREES;
-        uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / SWEEPER_HOMING_USTEPS_PER_SECOND;
-        uint32_t up_duration_limit_ms = (up_target_usteps * 1000.0f) / SWEEPER_HOMING_USTEPS_PER_SECOND;
+        int32_t down_target_usteps = 90.0f * kinematics::sweeper_usteps_to_degrees();
+        int32_t up_target_usteps = 180.0f * kinematics::sweeper_usteps_to_degrees();
+        uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / kinematics::sweeper_homing_usteps_per_second();
+        uint32_t up_duration_limit_ms = (up_target_usteps * 1000.0f) / kinematics::sweeper_homing_usteps_per_second();
 
-        motion::run_sweeper_velocity(-SWEEPER_HOMING_VELOCITY);
+        motion::run_sweeper_velocity(-(int)kinematics::sweeper_homing_usteps_per_period());
         delay(down_duration_ms);
         motion::run_sweeper_velocity(0);
 
         relay::debug("Sweeper moved down");
 
         uint32_t up_start_ms = millis();
-        motion::run_sweeper_velocity(SWEEPER_HOMING_VELOCITY);
+        motion::run_sweeper_velocity((int)kinematics::sweeper_homing_usteps_per_period());
         while(!telemetry::sweeper_endstop_triggered() && (millis() - up_start_ms < up_duration_limit_ms)) {}
         motion::run_sweeper_velocity(0);
         relay::debug("Sweeper moved up");
@@ -128,8 +141,10 @@ namespace motion {
 
     void sweeper_heartbeat() {
         float w_sweeper = W_BASE / cos(get_elevation() * (PI / 180.0f));
-        int32_t usteps_per_period = w_sweeper * SWEEPER_USTEPS_TO_DEGREES * 360.0f / ESP_CLOCK;
+        int32_t usteps_per_period = w_sweeper * kinematics::sweeper_usteps_to_degrees() * 360.0f / ESP_CLOCK;
         motion::run_sweeper_velocity(usteps_per_period);
+
+        relay::debug("Sweeper heartbeat:" + String(usteps_per_period) + " usteps/s" + " w_sweeper: " + String(w_sweeper) + " get_elevation: " + String(get_elevation()));
     }
 
     void home() {
@@ -139,14 +154,15 @@ namespace motion {
     }
 
     void start_scan() {
-        int32_t down_target_usteps = SWEEP_ANGLE * SWEEPER_USTEPS_TO_DEGREES;
-        uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / SWEEPER_HOMING_USTEPS_PER_SECOND;
+        int32_t down_target_usteps = SWEEP_ANGLE * kinematics::sweeper_usteps_to_degrees();
+        uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / kinematics::sweeper_homing_usteps_per_second();
 
-        motion::run_sweeper_velocity(-SWEEPER_HOMING_VELOCITY);
+        motion::run_sweeper_velocity(-(int)kinematics::sweeper_homing_usteps_per_period());
         delay(down_duration_ms);
         motion::run_sweeper_velocity(0);
 
-        motion::run_turret_velocity(TURRET_VELOCITY);
+
+        motion::run_turret_velocity((int)kinematics::turret_usteps_per_period(TURRET_VELOCITY_RPS));
     }
 
     bool scan_finished() {
