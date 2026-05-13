@@ -10,7 +10,7 @@
 #define SWEEPER_HOMING_VELOCITY_RPS (SWEEPER_HOMING_RPS * (SWEEPER_REVERSE ? -1.0f : 1.0f))
 
 // #define W_BASE (TURRET_VELOCITY_RPS * 1.0f / 360.0f)
-#define W_BASE (12 * 1.0f / 360.0f)
+#define W_BASE (TURRET_VELOCITY_RPS * 1.0f / 360.0f)
 
 // Declarations for conversion helpers implemented in kinematics.cpp
 namespace kinematics {
@@ -32,5 +32,7 @@ namespace kinematics {
     // Signature: rps_to_usteps_per_period(rps, steps_per_rev, gear_ratio, usteps_power, esp_clock)
     // Formula used: usteps_per_period = (rps * steps_per_rev * gear_ratio * (1 << usteps_power)) / esp_clock
     float rps_to_usteps_per_period(float rps, unsigned steps_per_rev, float gear_ratio, unsigned usteps_power, float esp_clock = ESP_CLOCK);
+
+    float usteps_per_period_to_usteps_per_second(float usteps_per_period, float esp_clock = ESP_CLOCK);
 
 }

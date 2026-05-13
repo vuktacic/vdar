@@ -5,10 +5,10 @@
 
 namespace motion {
 
-    int current_turret_usteps = 0;
-    int current_sweeper_usteps = 0;
-    int current_turret_velocity_usteps_per_second = 0;
-    int current_sweeper_velocity_usteps_per_second = 0;
+    float current_turret_usteps = 0.0f;
+    float current_sweeper_usteps = 0.0f;
+    float current_turret_velocity_usteps_per_second = 0.0f;
+    float current_sweeper_velocity_usteps_per_second = 0.0f;
 
     uint32_t last_heartbeat_us = 0;
 
@@ -50,15 +50,13 @@ namespace motion {
         sweeper_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
         relay::debug("Motor brake mode configured");
 
-        turret_motor.setRunCurrent(40);
+        turret_motor.setRunCurrent(70);
         sweeper_motor.setRunCurrent(70);
 
-        turret_motor.disableStealthChop();
-        sweeper_motor.disableStealthChop();
-
-        relay::debug(String(turret_motor.isCommunicating()));
-        relay::debug(String(turret_motor.isCommunicatingButNotSetup()));
-        relay::debug(String(turret_motor.isSetupAndCommunicating()));
+        turret_motor.enableStealthChop();
+        // turret_motor.disableStealthChop();
+        sweeper_motor.disableStealthChop(); // breaks the controller for some reason
+        // sweeper_motor.enableStealthChop();
 
     }
 
@@ -74,16 +72,16 @@ namespace motion {
         relay::debug("Motors disabled");
     }
 
-    void run_turret_velocity(int32_t velocity) {
-        turret_motor.moveAtVelocity(velocity);
-        current_turret_velocity_usteps_per_second = velocity;
-        relay::debug("Set turret velocity: " + String(velocity));
+    void run_turret_velocity(float velocity) {
+        turret_motor.moveAtVelocity((int32_t)velocity);
+        current_turret_velocity_usteps_per_second = kinematics::usteps_per_period_to_usteps_per_second(velocity);
+        // relay::debug("Set turret velocity: " + String((int)velocity));
     }
 
-    void run_sweeper_velocity(int32_t velocity) {
-        sweeper_motor.moveAtVelocity(velocity);
-        current_sweeper_velocity_usteps_per_second = velocity;
-        relay::debug("Set sweeper velocity: " + String(velocity));
+    void run_sweeper_velocity(float velocity) {
+        sweeper_motor.moveAtVelocity((int32_t)velocity);
+        current_sweeper_velocity_usteps_per_second = -kinematics::usteps_per_period_to_usteps_per_second(velocity);
+        // relay::debug("Set sweeper velocity: " + String((int)velocity));
     }
 
     void home_turret() {
@@ -136,15 +134,17 @@ namespace motion {
         current_turret_usteps += (current_turret_velocity_usteps_per_second * dt_us) / 1000000.0f;
         current_sweeper_usteps += (current_sweeper_velocity_usteps_per_second * dt_us) / 1000000.0f;
 
+        // relay::debug("Heartbeat: dt_us: " + String(dt_us) + "sweeper_usteps: " + String(current_sweeper_usteps) + " sweeper_velocity: " + String(current_sweeper_velocity_usteps_per_second) + " elevation: " + String(get_elevation()));
+
         last_heartbeat_us = micros();
     }
 
     void sweeper_heartbeat() {
         float w_sweeper = W_BASE / cos(get_elevation() * (PI / 180.0f));
-        int32_t usteps_per_period = w_sweeper * kinematics::sweeper_usteps_to_degrees() * 360.0f / ESP_CLOCK;
-        motion::run_sweeper_velocity(usteps_per_period);
+        float usteps_per_period = kinematics::rps_to_usteps_per_period(w_sweeper, NEMA_STEPS_PER_REV, SWEEPER_GEAR_RATIO, SWEEPER_USTEPS, ESP_CLOCK);
+        motion::run_sweeper_velocity(-usteps_per_period);
 
-        relay::debug("Sweeper heartbeat:" + String(usteps_per_period) + " usteps/s" + " w_sweeper: " + String(w_sweeper) + " get_elevation: " + String(get_elevation()));
+        // relay::debug("Sweeper heartbeat:" + String(usteps_per_period) + " usteps/s" + " w_sweeper: " + String(w_sweeper) + " get_elevation: " + String(get_elevation()));
     }
 
     void home() {
@@ -157,9 +157,11 @@ namespace motion {
         int32_t down_target_usteps = SWEEP_ANGLE * kinematics::sweeper_usteps_to_degrees();
         uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / kinematics::sweeper_homing_usteps_per_second();
 
-        motion::run_sweeper_velocity(-(int)kinematics::sweeper_homing_usteps_per_period());
+        motion::run_sweeper_velocity((int)kinematics::sweeper_homing_usteps_per_period());
         delay(down_duration_ms);
         motion::run_sweeper_velocity(0);
+
+        motion::set_elevation(-SWEEP_ANGLE);
 
 
         motion::run_turret_velocity((int)kinematics::turret_usteps_per_period(TURRET_VELOCITY_RPS));

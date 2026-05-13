@@ -9,8 +9,8 @@ namespace motion {
     extern void setup_controllers();
     extern void enable_controllers();
     extern void disable_controllers();
-    extern void run_turret_velocity(int32_t velocity);
-    extern void run_sweeper_velocity(int32_t velocity);
+    extern void run_turret_velocity(float velocity);
+    extern void run_sweeper_velocity(float velocity);
     extern void home_turret();
     extern void home_sweeper();
     extern void heartbeat();

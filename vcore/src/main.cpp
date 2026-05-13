@@ -28,17 +28,11 @@ void setup() {
 
     motion::setup_serial();
     telemetry::setup_serial();
-    // Ensure the hardware UART used for the lidar is opened here so the test is self-contained.
-    // This opens UART1 with the configured pins and baud so tests can manually write/read bytes.
-    Serial1.begin(LUNA_BAUD, SERIAL_8N1, LUNA_RX, LUNA_TX);
 
     motion::setup_controllers();
     motion::enable_controllers();
 
     telemetry::setup_lidar();
-
-    // Print homing velocity (in microsteps per period) via kinematics helper
-    relay::debug(String((int)kinematics::turret_homing_usteps_per_period()));
 
     runtime_status = "idle";
     relay::send_status(runtime_status);
@@ -63,8 +57,6 @@ void setup() {
 }
 
 void loop() {
-    relay::debug(String(telemetry::get_distance() / 2.54));
-
     String instruction = relay::read_instruction();
 
     if(instruction == "") { return; }
@@ -76,6 +68,58 @@ void loop() {
 
     if(instruction == "stop") {
         motion::stop();
+        runtime_status = "idle";
+        relay::send_status(runtime_status);
+        return;
+    }
+
+    if(instruction == "scan") {
+        runtime_status = "scanning";
+        relay::send_status(runtime_status);
+        motion::heartbeat();
+        motion::start_scan();
+
+        motion::heartbeat();
+
+        uint32_t luna_us = micros();
+        uint32_t sweeper_us = micros();
+
+        while(true) {
+            if(relay::read_instruction() == "stop") {
+                motion::stop();
+                runtime_status = "idle";
+                relay::send_status(runtime_status);
+                break;
+            }
+
+            motion::heartbeat();
+
+            if(micros() - luna_us >= 1000000.0f / (float)LUNA_HZ) {
+                relay::send(telemetry::get_distance(), motion::get_azimuth(), motion::get_elevation());
+                luna_us = micros();
+            }
+
+            if(micros() - sweeper_us >= 1000000.0f / (float)SWEEPER_HEARTBEAT_HZ) {
+                motion::sweeper_heartbeat();
+                sweeper_us = micros();
+            }
+
+            if(motion::scan_finished()) {\
+                motion::stop();
+                relay::debug("Scan finished");
+                runtime_status = "idle";
+                relay::send_status(runtime_status);
+                break;
+            }
+        }
+
+        return;
+    }
+
+    if(instruction == "home") {
+        runtime_status = "homing";
+        relay::send_status(runtime_status);
+        motion::home();
         runtime_status = "idle";
         relay::send_status(runtime_status);
         return;
@@ -119,7 +163,8 @@ void loop() {
         if(instruction == "motor_run") {
             if(TESTS_ALLOW_ACTUATE) {
                 test::motor_run_check();
-            } else {
+            }
+            else {
                 relay::debug("motor_run disabled in config.h");
             }
             relay::send_status(runtime_status);
@@ -129,7 +174,8 @@ void loop() {
         if(instruction == "motor_move") {
             if(TESTS_ALLOW_ACTUATE) {
                 test::motor_move_check();
-            } else {
+            }
+            else {
                 relay::debug("motor_move disabled in config.h");
             }
             relay::send_status(runtime_status);

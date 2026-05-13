@@ -47,12 +47,18 @@ namespace kinematics {
         return rps_to_usteps_per_period(SWEEPER_HOMING_VELOCITY_RPS, NEMA_STEPS_PER_REV, SWEEPER_GEAR_RATIO, SWEEPER_USTEPS, ESP_CLOCK);
     }
 
-}
 
-// Core conversion function: convert rotations-per-second to microsteps-per-period
-// Formula: usteps_per_period = rps * steps_per_rev * gear_ratio * (1 << usteps_power) / esp_clock
-float kinematics::rps_to_usteps_per_period(float rps, unsigned steps_per_rev, float gear_ratio, unsigned usteps_power, float esp_clock) {
-    // compute usteps/sec then divide by periods/sec (esp_clock)
-    float usteps_per_second = rps * (float)steps_per_rev * gear_ratio * (1UL << usteps_power);
-    return usteps_per_second / esp_clock;
+    // Core conversion function: convert rotations-per-second to microsteps-per-period
+    // Formula: usteps_per_period = rps * steps_per_rev * gear_ratio * (1 << usteps_power) / esp_clock
+    float rps_to_usteps_per_period(float rps, unsigned steps_per_rev, float gear_ratio, unsigned usteps_power, float esp_clock) {
+        // compute usteps/sec then divide by periods/sec (esp_clock)
+        float usteps_per_second = rps * (float)steps_per_rev * gear_ratio * (1UL << usteps_power);
+        return usteps_per_second / esp_clock;
+    }
+
+    float usteps_per_period_to_usteps_per_second(float usteps_per_period, float esp_clock) {
+        return usteps_per_period * esp_clock;
+    }
+
+
 }
