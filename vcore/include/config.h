@@ -53,6 +53,8 @@
 #define SWEEPER_HEARTBEAT_HZ 50.0f
 
 #define SWEEP_ANGLE 80.0F
+#define SWEEP_MAX 80.0F
+#define SWEEP_MIN -45.0F
 
 // Test configuration (simple compile-time flags)
 // Use #define constants for configuration. Do NOT use preprocessor conditionals

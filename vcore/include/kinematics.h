@@ -2,7 +2,7 @@
 #include "config.h"
 
 // Keep only rotation-per-second settings here. Conversion helpers moved to kinematics.cpp
-#define TURRET_VELOCITY_RPS ((LUNA_HZ / 360.0f) * (TURRET_REVERSE ? -1.0f : 1.0f))
+#define TURRET_VELOCITY_RPS ((LUNA_HZ / 360.0f) / 3.0f * (TURRET_REVERSE ? -1.0f : 1.0f))
 
 // Homing velocity rps macro (keep as-is)
 #define TURRET_HOMING_VELOCITY_RPS (TURRET_HOMING_RPS * (TURRET_REVERSE ? -1.0f : 1.0f))

@@ -5,7 +5,13 @@
 
 namespace motion {
 
+    HardwareSerial & serial_motor = Serial2;
+
+    TMC2209 turret_motor;
+    TMC2209 sweeper_motor;
+
     float current_turret_usteps = 0.0f;
+    float start_turret_us = 0;
     float current_sweeper_usteps = 0.0f;
     float current_turret_velocity_usteps_per_second = 0.0f;
     float current_sweeper_velocity_usteps_per_second = 0.0f;
@@ -23,11 +29,6 @@ namespace motion {
     void set_elevation(float elevation) {
         current_sweeper_usteps = elevation * kinematics::sweeper_usteps_to_degrees();
     }
-
-    HardwareSerial & serial_motor = Serial2;
-
-    TMC2209 turret_motor;
-    TMC2209 sweeper_motor;
 
     void setup_serial() {
         relay::debug("Motor serial configured");
@@ -50,7 +51,7 @@ namespace motion {
         sweeper_motor.setStandstillMode(TMC2209::STRONG_BRAKING);
         relay::debug("Motor brake mode configured");
 
-        turret_motor.setRunCurrent(70);
+        turret_motor.setRunCurrent(40);
         sweeper_motor.setRunCurrent(70);
 
         turret_motor.enableStealthChop();
@@ -75,6 +76,8 @@ namespace motion {
     void run_turret_velocity(float velocity) {
         turret_motor.moveAtVelocity((int32_t)velocity);
         current_turret_velocity_usteps_per_second = kinematics::usteps_per_period_to_usteps_per_second(velocity);
+        current_turret_usteps = 0;
+        start_turret_us = micros();
         // relay::debug("Set turret velocity: " + String((int)velocity));
     }
 
@@ -131,10 +134,17 @@ namespace motion {
     void heartbeat() {
         uint32_t dt_us = micros() - last_heartbeat_us;
 
-        current_turret_usteps += (current_turret_velocity_usteps_per_second * dt_us) / 1000000.0f;
-        current_sweeper_usteps += (current_sweeper_velocity_usteps_per_second * dt_us) / 1000000.0f;
+        // current_turret_usteps += (current_turret_velocity_usteps_per_second * dt_us) / 1000000.0f;
 
-        // relay::debug("Heartbeat: dt_us: " + String(dt_us) + "sweeper_usteps: " + String(current_sweeper_usteps) + " sweeper_velocity: " + String(current_sweeper_velocity_usteps_per_second) + " elevation: " + String(get_elevation()));
+        current_turret_usteps = current_turret_velocity_usteps_per_second * ((float)(micros() - start_turret_us) / 1000000.0f);
+
+        if(telemetry::turret_endstop_triggered()) {
+            current_turret_usteps = 0;
+            start_turret_us = micros();
+            // relay::debug("Turret endstop hit, resetting turret position");
+        }
+
+        current_sweeper_usteps += (current_sweeper_velocity_usteps_per_second * dt_us) / 1000000.0f;
 
         last_heartbeat_us = micros();
     }
@@ -154,21 +164,21 @@ namespace motion {
     }
 
     void start_scan() {
-        int32_t down_target_usteps = SWEEP_ANGLE * kinematics::sweeper_usteps_to_degrees();
+        int32_t down_target_usteps = -SWEEP_MIN * kinematics::sweeper_usteps_to_degrees(); // Need negative because of motor fuckery.
         uint32_t down_duration_ms = (down_target_usteps * 1000.0f) / kinematics::sweeper_homing_usteps_per_second();
 
         motion::run_sweeper_velocity((int)kinematics::sweeper_homing_usteps_per_period());
         delay(down_duration_ms);
         motion::run_sweeper_velocity(0);
 
-        motion::set_elevation(-SWEEP_ANGLE);
+        motion::set_elevation(SWEEP_MIN);
 
 
         motion::run_turret_velocity((int)kinematics::turret_usteps_per_period(TURRET_VELOCITY_RPS));
     }
 
     bool scan_finished() {
-        return motion::get_elevation() >= SWEEP_ANGLE;
+        return motion::get_elevation() >= SWEEP_MAX;
     }
 
     void stop() {

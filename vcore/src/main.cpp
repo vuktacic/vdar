@@ -11,6 +11,10 @@ String runtime_status = "idle";
 uint32_t luna_us = 0;
 uint32_t sweeper_us = 0;
 
+uint32_t azimuth_us = 0;
+float last_azimuth = 0.0f;
+int i = 0;
+
 void setup() {
 
     relay::setup_serial();
@@ -57,6 +61,7 @@ void setup() {
 }
 
 void loop() {
+
     String instruction = relay::read_instruction();
 
     if(instruction == "") { return; }
@@ -74,6 +79,12 @@ void loop() {
     }
 
     if(instruction == "scan") {
+        runtime_status = "homing";
+        relay::send_status(runtime_status);
+        motion::home();
+        runtime_status = "idle";
+        relay::send_status(runtime_status);
+
         runtime_status = "scanning";
         relay::send_status(runtime_status);
         motion::heartbeat();
@@ -104,8 +115,9 @@ void loop() {
                 sweeper_us = micros();
             }
 
-            if(motion::scan_finished()) {\
+            if(motion::scan_finished()) {
                 motion::stop();
+                motion::home();
                 relay::debug("Scan finished");
                 runtime_status = "idle";
                 relay::send_status(runtime_status);
@@ -195,6 +207,15 @@ void loop() {
             runtime_status = "testing";
             relay::send_status(runtime_status);
             test::sweeper_test_constant_speed();
+            runtime_status = "idle";
+            relay::send_status(runtime_status);
+            return;
+        }
+
+        if(instruction == "turret_vel") {
+            runtime_status = "testing";
+            relay::send_status(runtime_status);
+            motion::run_turret_velocity((int)kinematics::turret_usteps_per_period(TURRET_VELOCITY_RPS));
             runtime_status = "idle";
             relay::send_status(runtime_status);
             return;
