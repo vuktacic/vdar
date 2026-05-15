@@ -51,6 +51,6 @@ namespace relay {
     }
 
     void send(int distance, float azimuth, float elevation) {
-        Serial.println("scan_data " + String(distance) + " " + String(azimuth) + " " + String(elevation));
+        Serial.println("scan_data " + String(distance, 8) + " " + String(azimuth, 8) + " " + String(elevation, 8));
     }
 }
