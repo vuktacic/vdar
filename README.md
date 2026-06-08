@@ -38,6 +38,14 @@ just run
 
 
 ## Pictures
+### Real life
+![alt text](./project/assets/image%20copy.png)
+![alt text](./project/assets/image%20copy%202.png)
+
+### Scans
+![alt text](./project/scans/hr1.png)
+![alt text](./project/scans/hr2.png)
+
 ### 3D CAD
 ![alt text](./project/assets/image.png)
 ![alt text](./project/assets/image1.png)

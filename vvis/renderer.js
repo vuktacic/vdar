@@ -32,7 +32,7 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.screenSpacePanning = false;
 controls.target.set(0, 0, 0);
-controls.minDistance = VIEW_FRAME_RADIUS_M * 0.5;
+controls.minDistance = VIEW_FRAME_RADIUS_M * 0.01;
 controls.maxDistance = VIEW_FRAME_RADIUS_M * 8.0;
 controls.update();
 

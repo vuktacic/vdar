@@ -111,6 +111,62 @@
             z-index: 5;
             pointer-events: none;
         }
+        #left-panel {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 96px;
+            padding: 8px;
+            border: 1px solid var(--theme-primary);
+            background: rgba(var(--theme-bg-rgb), 0.75);
+            color: var(--theme-primary);
+            font-family: 'Courier New', monospace;
+            pointer-events: auto;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #left-panel .vertical-container {
+            width: 48px;
+            height: 240px;
+            position: relative;
+            display: block;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+
+        /* Center the rotated range absolutely inside the container */
+        #left-panel input[type="range"].vertical-slider {
+            -webkit-appearance: none;
+            width: 180px; /* visual length before rotation */
+            height: 18px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            transform-origin: center center;
+            outline: none;
+            background: transparent;
+        }
+
+        /* Webkit styling for track/thumb so it looks reasonable when rotated */
+        #left-panel input[type="range"].vertical-slider::-webkit-slider-runnable-track {
+            height: 6px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+        }
+        #left-panel input[type="range"].vertical-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--theme-primary);
+            border-radius: 50%;
+            margin-top: 0;
+        }
         #serial-row {
             display: flex;
             gap: 6px;
@@ -246,6 +302,24 @@
         <div id="runtime-status">Status: Idle</div>
     </div>
 
+    <div id="left-panel">
+        <div style="font-weight: bold; letter-spacing: 1px;">View</div>
+        <div class="vertical-container">
+            <!-- Hidden native input kept for compatibility with renderer code -->
+            <input id="max-height" type="hidden" value="8.0" />
+            <!-- Custom vertical slider control -->
+            <div id="max-height-control" class="custom-vertical-slider" role="slider" tabindex="0" aria-valuemin="-8" aria-valuemax="8" aria-valuenow="8">
+                <div class="track"></div>
+                <div class="thumb" aria-hidden="true"></div>
+            </div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:2px;">
+            <div style="font-size:11px;">Max Height</div>
+            <div id="max-height-value" style="font-size:11px;">8.0 m</div>
+        </div>
+        </div>
+    </div>
+
     <div id="scan-stats">
         <div>Time Spent Scanning <span id="scan-time" class="value">00:00.0</span></div>
         <div># of Points <span id="point-count" class="value">0</span></div>
@@ -296,11 +370,7 @@
                 <input id="idle-pattern-speed" type="range" min="0.05" max="2.0" step="0.05" value="0.1" />
                 <span id="idle-pattern-speed-value" class="idle-value">0.1x</span>
             </div>
-            <div class="idle-row">
-                <span>Max Height</span>
-                <input id="max-height" type="range" min="-8.0" max="8.0" step="0.1" value="8.0" />
-                <span id="max-height-value" class="idle-value">8.0 m</span>
-            </div>
+            <!-- Max Height moved to left panel -->
         </div>
     </div>
 
@@ -312,6 +382,143 @@
             }
         }
     </script>
+    <style>
+        /* Custom vertical slider styles */
+        .custom-vertical-slider {
+            width: 100%;
+            max-width: 48px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+        }
+
+        .custom-vertical-slider .track {
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            width: 6px;
+            height: calc(100% - 16px);
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+        }
+
+        .custom-vertical-slider .thumb {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--theme-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(0,0,0,0.6);
+            top: 50%; /* initial; script will place it */
+        }
+
+        .custom-vertical-slider:focus { outline: 2px solid rgba(224,72,21,0.18); }
+    </style>
+
+    <script>
+        // Lightweight custom vertical slider implementation.
+        (function(){
+            const control = document.getElementById('max-height-control');
+            const thumb = control.querySelector('.thumb');
+            const track = control.querySelector('.track');
+            const hidden = document.getElementById('max-height');
+            const valueDisplay = document.getElementById('max-height-value');
+            const MIN = -8.0; const MAX = 8.0; const STEP = 0.1;
+
+            function clamp(v, a, b){ return Math.min(b, Math.max(a, v)); }
+            function valueToY(value){
+                const rect = track.getBoundingClientRect();
+                const ratio = (value - MIN) / (MAX - MIN);
+                return rect.top + rect.height * (1 - ratio);
+            }
+            function yToValue(y){
+                const rect = track.getBoundingClientRect();
+                const rel = clamp((y - rect.top) / rect.height, 0, 1);
+                const ratio = 1 - rel;
+                let v = MIN + ratio * (MAX - MIN);
+                // snap to STEP
+                v = Math.round(v / STEP) * STEP;
+                return Number(v.toFixed(2));
+            }
+            function updateThumbForValue(v){
+                const rect = track.getBoundingClientRect();
+                const ratio = (v - MIN) / (MAX - MIN);
+                const y = rect.top + rect.height * (1 - ratio);
+                const controlRect = control.getBoundingClientRect();
+                const topPct = ((y - controlRect.top) / controlRect.height) * 100;
+                thumb.style.top = `${topPct}%`;
+            }
+            function setValue(v){
+                v = clamp(Number(v), MIN, MAX);
+                hidden.value = String(v);
+                // dispatch input event so existing renderer code listening on the hidden input will react
+                try { hidden.dispatchEvent(new Event('input', { bubbles: true })); } catch(e) { /* ignore */ }
+                control.setAttribute('aria-valuenow', String(v));
+                valueDisplay.textContent = `${v.toFixed(1)} m`;
+                updateThumbForValue(v);
+            }
+
+            // initialize
+            setValue(Number(hidden.value || MAX));
+
+            let dragging = false;
+            function onPointerDown(e){
+                // Start dragging and capture pointer so we continue receiving events
+                e.preventDefault();
+                e.stopPropagation();
+                dragging = true;
+                try { control.setPointerCapture(e.pointerId); } catch(err) {}
+                // process initial location
+                const v = yToValue(e.clientY);
+                setValue(v);
+            }
+            function onPointerMove(e){
+                if(!dragging) return; // ignore unless we're actively dragging the control
+                e.preventDefault();
+                e.stopPropagation();
+                const v = yToValue(e.clientY);
+                setValue(v);
+            }
+            function onPointerUp(e){
+                if(!dragging) return;
+                e.preventDefault();
+                e.stopPropagation();
+                dragging = false;
+                try{ control.releasePointerCapture(e.pointerId); } catch(err){}
+            }
+
+            control.addEventListener('pointerdown', onPointerDown);
+            // listen globally but ignore moves unless dragging, to avoid stealing pointer events
+            window.addEventListener('pointermove', onPointerMove, { passive: false });
+            window.addEventListener('pointerup', onPointerUp, { passive: false });
+
+            // keyboard
+            control.addEventListener('keydown', (ev) => {
+                const cur = Number(hidden.value || 0);
+                if(ev.key === 'ArrowUp' || ev.key === 'PageUp'){
+                    setValue(cur + STEP);
+                    ev.preventDefault();
+                } else if(ev.key === 'ArrowDown' || ev.key === 'PageDown'){
+                    setValue(cur - STEP);
+                    ev.preventDefault();
+                } else if(ev.key === 'Home'){
+                    setValue(MIN); ev.preventDefault();
+                } else if(ev.key === 'End'){
+                    setValue(MAX); ev.preventDefault();
+                }
+            });
+
+            // expose a tiny helper so external code can update (keeps compatibility)
+            window.__customMaxHeightSet = setValue;
+        })();
+    </script>
+
     <script type="module" src="vvis/renderer2.js"></script>
 </body>
 </html>
