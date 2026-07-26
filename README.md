@@ -1,6 +1,6 @@
 # vdar
 
-vdar is a low-cost 3D lidar scanner using the TF-Luna. It can generate point clouds of it's environment, which can be visualized with [vvis](./vvis). vdar is completely open source, and was designed for Hack Club's Stasis program.
+vdar is a low-cost 3D lidar scanner using the TF-Luna. It can generate point clouds of it's environment, which can be visualized with [vvis](./vvis). vdar is completely open source, and was designed for Hack Club's [Stasis program](https://stasis.hackclub.com). vdar was also exhibited at [Open Sauce 2026](https://www.opensauce.com/)
 
 I created vdar because of a general interest in LiDAR. I've been playing with point clouds for a few years, and wanted to create a device that could generate my own clouds. I also wanted to learn how to create a mechanically more complex design, combined with designing and manufacturing an actual PCB.
 
