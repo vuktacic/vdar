@@ -42,7 +42,6 @@ just run
 ## Pictures
 ### Real life
 ![alt text](./project/assets/image%20copy.png)
-![alt text](./project/assets/image%20copy%202.png)
 
 ### Scans
 ![alt text](./project/scans/hr1.png)
