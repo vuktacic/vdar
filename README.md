@@ -12,6 +12,7 @@ I created vdar because of a general interest in LiDAR. I've been playing with po
   - [`./hardware/cad`](./hardware/cad) - Fusion 360 & Step design files for vdar
   - [`./hardware/pcb`](./hardware/pcb) - KiCad design files for vdar
     - [`./hardware/pcb/production`](./hardware/pcb/production) - PCB Production files (gerbers.zip)
+- [`./JOURNAL.md`](./JOURNAL.md)
 - [`./project`](./project) - Project management files for vdar
     - [`./project/assets`](./project/assets) - Media for project files
     - [`./project/docs`](./project/docs) - Assembly instructions for vdar
